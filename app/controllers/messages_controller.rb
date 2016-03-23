@@ -1,7 +1,8 @@
 class MessagesController < ApplicationController
   
+  # 事前処理（onlyで指定されたactionの場合だけ実行）
   before_action :set_message, only: [:edit, :update, :destroy]
-  
+
   def index
     @message = Message.new
     # すべて取得
@@ -11,7 +12,6 @@ class MessagesController < ApplicationController
   # 作成
   def create
     @message = Message.new(message_params)
-    
     if @message.save 
       redirect_to root_path , notice: "メッセージを保存しました"
     else 
@@ -20,12 +20,12 @@ class MessagesController < ApplicationController
       flash.now[:alert] = "メッセージの保存に失敗しました"
       render 'index'
     end
-    
   end
   
   # 編集
-  def edit
-  end
+  #コメントアウトしても動く
+  #def edit
+  #end
   
   # 更新
   def update
@@ -40,17 +40,22 @@ class MessagesController < ApplicationController
   
   # 削除
   def destroy
+    # destoryは失敗しないのか…？
     @message.destroy
     redirect_to root_path, notice: "メッセージを削除しました"
   end
   
+  # 以下、プライベートメソッド
   private
   
   def message_params
+    # ストロングパラメータ（リクエストパラメータをホワイトリスト形式で受け取る機能）
+    # paramsに:messageキーが存在するか検証し、あれば:nameと:bodyの値を受け取る
     params.require(:message).permit(:name, :body)
   end
   
   def set_message
+    # paramsから:idの値を取得し、そのidを元に検索する
     @message = Message.find(params[:id])
   end
   
