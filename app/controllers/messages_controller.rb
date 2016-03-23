@@ -51,7 +51,8 @@ class MessagesController < ApplicationController
   def message_params
     # ストロングパラメータ（リクエストパラメータをホワイトリスト形式で受け取る機能）
     # paramsに:messageキーが存在するか検証し、あれば:nameと:bodyの値を受け取る
-    params.require(:message).permit(:name, :body)
+    # :ageを追加
+    params.require(:message).permit(:name, :body, :age)
   end
   
   def set_message
