@@ -5,11 +5,13 @@
     
     <div class="panel-body">
         <% @messages.each do |message| %>
+        <div class="message">
             <span class="label label-info"><%= message.name %></span>
-                <%= message.body %>
-                [<%= link_to("編集", edit_message_path(message)) %>
-                 <%= link_to "削除" , message , method: :delete, data: { confirm: "削除してもよろしいですか?" } %>]
+                <span class="message_text"><%= message.body %></span>
+                <%= link_to("編集", edit_message_path(message), class: "btn btn-success btn-xs") %>
+                <%= link_to "削除" , message , method: :delete, data: { confirm: "削除してもよろしいですか?" }, class: "btn btn-danger btn-xs" %>
             <br/>
+        </div>
         <% end %>
     </div>
 </div>
